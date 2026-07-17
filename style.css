@@ -1,0 +1,322 @@
+/* =========================================================
+   SHIVAM — PORTFOLIO STYLESHEET
+   Project 1: Static Webpage Design (DecodeLabs)
+   Structure: HTML (index.html) | Appearance: this file only
+   ========================================================= */
+
+/* ---------- CSS Variables (design tokens) ---------- */
+:root {
+  --color-bg: #f7faf8;
+  --color-surface: #ffffff;
+  --color-primary: #4a7856;
+  --color-primary-dark: #365c41;
+  --color-text: #23302a;
+  --color-text-muted: #5b6b62;
+  --color-border: #dfe7e1;
+
+  --font-base: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  --gap-sm: 12px;
+  --gap-md: 24px;
+  --gap-lg: 48px;
+
+  --max-width: 1200px;
+}
+
+/* ---------- Reset ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  line-height: 1.6;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-md);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ---------- Reusable layout helper ---------- */
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  margin-bottom: var(--gap-md);
+  text-align: center;
+}
+
+/* =========================================================
+   HEADER (Flexbox — micro alignment of logo + nav)
+   ========================================================= */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--gap-md) var(--gap-md);
+}
+
+.site-header__logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+.site-header__logo-dot {
+  color: var(--color-primary);
+}
+
+.nav-list {
+  display: flex;
+  gap: var(--gap-md);
+}
+
+.nav-list__link {
+  font-weight: 600;
+  color: var(--color-text);
+  padding: 8px 4px;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-list__link:hover,
+.nav-list__link:focus-visible {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+/* =========================================================
+   HERO (Flexbox — two-column alignment)
+   ========================================================= */
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-lg);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--gap-lg) var(--gap-md);
+}
+
+.hero__content {
+  flex: 1 1 420px;
+}
+
+.hero__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  margin-bottom: var(--gap-sm);
+  line-height: 1.2;
+}
+
+.hero__subtitle {
+  color: var(--color-text-muted);
+  margin-bottom: var(--gap-md);
+  max-width: 48ch;
+}
+
+.hero__image {
+  flex: 1 1 320px;
+  display: flex;
+  justify-content: center;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-block;
+  font-family: var(--font-base);
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 12px 28px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.2s ease;
+}
+
+.btn--primary {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   ABOUT SECTION
+   ========================================================= */
+.about {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--gap-lg) var(--gap-md);
+  text-align: center;
+}
+
+.about__text {
+  color: var(--color-text-muted);
+}
+
+/* =========================================================
+   CONTENT GRID / PROJECTS (CSS Grid — macro page structure)
+   ========================================================= */
+.content-grid {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--gap-lg) var(--gap-md);
+}
+
+.content-grid__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--gap-md);
+}
+
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.card__image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+}
+
+.card__text {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+/* =========================================================
+   CONTACT SECTION (Flexbox form layout)
+   ========================================================= */
+.contact {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--gap-lg) var(--gap-md);
+  text-align: center;
+}
+
+.contact__intro {
+  color: var(--color-text-muted);
+  margin-bottom: var(--gap-md);
+}
+
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  text-align: left;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-field__label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.form-field__input {
+  font-family: var(--font-base);
+  font-size: 1rem;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.form-field__input:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.form-field__input--textarea {
+  resize: vertical;
+}
+
+/* =========================================================
+   FOOTER (Flexbox)
+   ========================================================= */
+.site-footer {
+  background-color: var(--color-primary-dark);
+  color: #ffffff;
+  padding: var(--gap-lg) var(--gap-md);
+  text-align: center;
+}
+
+.site-footer__contact {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap-md);
+  margin-bottom: var(--gap-md);
+  font-size: 0.9rem;
+}
+
+.site-footer__copy {
+  font-size: 0.85rem;
+  color: #cfe0d4;
+}
+
+/* =========================================================
+   RESPONSIVE — small screens
+   ========================================================= */
+@media (max-width: 640px) {
+  .site-header {
+    flex-direction: column;
+    gap: var(--gap-sm);
+  }
+
+  .nav-list {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero__title {
+    font-size: 2rem;
+  }
+}
