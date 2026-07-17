@@ -1,18 +1,19 @@
 /* =========================================================
-   SHIVAM — PORTFOLIO STYLESHEET
-   Project 1: Static Webpage Design (DecodeLabs)
-   Structure: HTML (index.html) | Appearance: this file only
+   SHIVAM — RESPONSIVE WEB LAYOUT STYLESHEET
+   Project 2: Responsive Web Layout (DecodeLabs)
+   Approach: MOBILE-FIRST. Base styles = smallest screen.
+   Media queries ADD complexity as viewport grows.
    ========================================================= */
 
-/* ---------- CSS Variables (design tokens) ---------- */
+/* ---------- Design tokens ---------- */
 :root {
-  --color-bg: #f7faf8;
+  --color-bg: #f5f9fb;
   --color-surface: #ffffff;
-  --color-primary: #4a7856;
-  --color-primary-dark: #365c41;
-  --color-text: #23302a;
-  --color-text-muted: #5b6b62;
-  --color-border: #dfe7e1;
+  --color-primary: #2b5f7a;
+  --color-primary-dark: #1f4a5f;
+  --color-text: #202a30;
+  --color-text-muted: #56666f;
+  --color-border: #dbe6ea;
 
   --font-base: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
@@ -21,10 +22,19 @@
   --radius-lg: 20px;
 
   --gap-sm: 12px;
-  --gap-md: 24px;
-  --gap-lg: 48px;
+  --gap-md: 20px;
+  --gap-lg: 40px;
 
   --max-width: 1200px;
+
+  /* Fluid typography: min, ideal (viewport-based), max */
+  --fs-h1: clamp(1.75rem, 5vw + 1rem, 3rem);
+  --fs-h2: clamp(1.4rem, 3vw + 0.8rem, 2rem);
+  --fs-h3: clamp(1.1rem, 1.5vw + 0.8rem, 1.3rem);
+  --fs-body: clamp(1rem, 0.4vw + 0.9rem, 1.05rem);
+
+  /* Minimum accessible touch target */
+  --tap-target: 44px;
 }
 
 /* ---------- Reset ---------- */
@@ -34,8 +44,14 @@
   box-sizing: border-box;
 }
 
+html {
+  /* NEVER disable zoom: no maximum-scale/user-scalable restrictions in the HTML meta tag */
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-base);
+  font-size: var(--fs-body);
   color: var(--color-text);
   background-color: var(--color-bg);
   line-height: 1.6;
@@ -57,9 +73,8 @@ ul {
   list-style: none;
 }
 
-/* ---------- Reusable layout helper ---------- */
 .section-title {
-  font-size: 2rem;
+  font-size: var(--fs-h2);
   font-weight: 700;
   color: var(--color-primary-dark);
   margin-bottom: var(--gap-md);
@@ -67,19 +82,27 @@ ul {
 }
 
 /* =========================================================
-   HEADER (Flexbox — micro alignment of logo + nav)
+   HEADER — mobile-first: logo + hamburger only
    ========================================================= */
 .site-header {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.site-header__bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: var(--gap-md) var(--gap-md);
+  padding: var(--gap-sm) var(--gap-md);
 }
 
 .site-header__logo {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: var(--color-primary-dark);
 }
@@ -88,45 +111,86 @@ ul {
   color: var(--color-primary);
 }
 
-.nav-list {
+/* Hamburger button — meets the 44x44px minimum touch target */
+.nav-toggle {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: var(--tap-target);
+  height: var(--tap-target);
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.nav-toggle__bar {
+  width: 22px;
+  height: 2px;
+  background-color: var(--color-primary-dark);
+  border-radius: 2px;
+}
+
+/* Desktop nav hidden by default (mobile-first) */
+.site-header__nav--desktop {
+  display: none;
+}
+
+/* Mobile nav popover panel */
+.mobile-nav {
+  border: none;
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+  padding: var(--gap-lg) var(--gap-md);
+  width: min(75vw, 320px);
+  height: 100vh;
+  max-height: 100vh;
+  margin: 0 0 0 auto;
+  background-color: var(--color-surface);
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
+}
+
+.mobile-nav::backdrop {
+  background-color: rgba(15, 30, 40, 0.4);
+}
+
+.mobile-nav__list {
+  display: flex;
+  flex-direction: column;
   gap: var(--gap-md);
 }
 
-.nav-list__link {
+.mobile-nav__link {
+  display: flex;
+  align-items: center;
+  min-height: var(--tap-target);
+  font-size: 1.1rem;
   font-weight: 600;
   color: var(--color-text);
-  padding: 8px 4px;
-  border-bottom: 2px solid transparent;
-  transition: border-color 0.2s ease, color 0.2s ease;
 }
 
-.nav-list__link:hover,
-.nav-list__link:focus-visible {
+.mobile-nav__link:hover,
+.mobile-nav__link:focus-visible {
   color: var(--color-primary);
-  border-bottom-color: var(--color-primary);
 }
 
 /* =========================================================
-   HERO (Flexbox — two-column alignment)
+   HERO — mobile-first: stacked column
    ========================================================= */
 .hero {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  text-align: center;
   gap: var(--gap-lg);
   max-width: var(--max-width);
   margin: 0 auto;
   padding: var(--gap-lg) var(--gap-md);
 }
 
-.hero__content {
-  flex: 1 1 420px;
-}
-
 .hero__title {
-  font-size: 2.5rem;
+  font-size: var(--fs-h1);
   font-weight: 700;
   color: var(--color-primary-dark);
   margin-bottom: var(--gap-sm);
@@ -136,22 +200,24 @@ ul {
 .hero__subtitle {
   color: var(--color-text-muted);
   margin-bottom: var(--gap-md);
-  max-width: 48ch;
+  max-width: 52ch;
 }
 
 .hero__image {
-  flex: 1 1 320px;
-  display: flex;
-  justify-content: center;
+  width: 100%;
+  max-width: 360px;
 }
 
-/* ---------- Buttons ---------- */
+/* Buttons — always a full accessible tap target */
 .btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tap-target);
   font-family: var(--font-base);
   font-weight: 600;
   font-size: 1rem;
-  padding: 12px 28px;
+  padding: 10px 28px;
   border-radius: var(--radius-sm);
   border: none;
   cursor: pointer;
@@ -170,7 +236,7 @@ ul {
 }
 
 /* =========================================================
-   ABOUT SECTION
+   ABOUT
    ========================================================= */
 .about {
   max-width: 800px;
@@ -184,7 +250,8 @@ ul {
 }
 
 /* =========================================================
-   CONTENT GRID / PROJECTS (CSS Grid — macro page structure)
+   CONTENT GRID — mobile-first: single column,
+   CSS Grid reflows automatically as space allows
    ========================================================= */
 .content-grid {
   max-width: var(--max-width);
@@ -194,7 +261,7 @@ ul {
 
 .content-grid__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: 1fr;
   gap: var(--gap-md);
 }
 
@@ -215,7 +282,7 @@ ul {
 }
 
 .card__title {
-  font-size: 1.25rem;
+  font-size: var(--fs-h3);
   font-weight: 600;
   color: var(--color-primary-dark);
 }
@@ -226,7 +293,7 @@ ul {
 }
 
 /* =========================================================
-   CONTACT SECTION (Flexbox form layout)
+   CONTACT — Flexbox form, mobile-first
    ========================================================= */
 .contact {
   max-width: 640px;
@@ -260,6 +327,7 @@ ul {
 }
 
 .form-field__input {
+  min-height: var(--tap-target);
   font-family: var(--font-base);
   font-size: 1rem;
   padding: 10px 14px;
@@ -276,10 +344,11 @@ ul {
 
 .form-field__input--textarea {
   resize: vertical;
+  min-height: calc(var(--tap-target) * 2);
 }
 
 /* =========================================================
-   FOOTER (Flexbox)
+   FOOTER
    ========================================================= */
 .site-footer {
   background-color: var(--color-primary-dark);
@@ -290,33 +359,92 @@ ul {
 
 .site-footer__contact {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--gap-md);
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-sm);
   margin-bottom: var(--gap-md);
   font-size: 0.9rem;
 }
 
 .site-footer__copy {
   font-size: 0.85rem;
-  color: #cfe0d4;
+  color: #cfe3ea;
 }
 
 /* =========================================================
-   RESPONSIVE — small screens
+   BREAKPOINT: TABLET (min-width: 768px)
+   "Breakpoints are bridges, not fences" — placed where
+   content starts to feel cramped, not at a device name.
    ========================================================= */
-@media (max-width: 640px) {
-  .site-header {
-    flex-direction: column;
-    gap: var(--gap-sm);
+@media (min-width: 768px) {
+
+  /* Reveal full nav, hide hamburger */
+  .site-header__nav--desktop {
+    display: flex;
+  }
+
+  .nav-toggle {
+    display: none;
   }
 
   .nav-list {
-    flex-wrap: wrap;
-    justify-content: center;
+    display: flex;
+    gap: var(--gap-md);
   }
 
-  .hero__title {
-    font-size: 2rem;
+  .nav-list__link {
+    display: flex;
+    align-items: center;
+    min-height: var(--tap-target);
+    font-weight: 600;
+    padding: 0 4px;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .nav-list__link:hover,
+  .nav-list__link:focus-visible {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+  }
+
+  /* Hero becomes two columns */
+  .hero {
+    flex-direction: row;
+    text-align: left;
+    justify-content: space-between;
+  }
+
+  .hero__content {
+    flex: 1 1 420px;
+  }
+
+  .hero__image {
+    flex: 1 1 320px;
+    max-width: 420px;
+  }
+
+  /* Content grid: 2 columns */
+  .content-grid__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Footer contact row goes horizontal */
+  .site-footer__contact {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--gap-md);
+  }
+}
+
+/* =========================================================
+   BREAKPOINT: DESKTOP (min-width: 1024px)
+   ========================================================= */
+@media (min-width: 1024px) {
+
+  /* Content grid: 4 columns — full macro layout */
+  .content-grid__grid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }

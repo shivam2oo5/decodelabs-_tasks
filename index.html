@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- THE KEY TO THE KINGDOM: viewport tag, user-scalable NOT restricted (a11y requirement) -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shivam | Frontend Developer Portfolio</title>
-  <meta name="description" content="Portfolio website of Shivam, Frontend Developer at DecodeLabs.">
+  <title>Shivam | Responsive Web Layout</title>
+  <meta name="description" content="Project 2: Responsive Web Layout — a fluid, mobile-first webpage built by Shivam for the DecodeLabs Frontend Development Internship.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
@@ -13,14 +14,38 @@
 
   <!-- ===================== HEADER ===================== -->
   <header class="site-header">
-    <div class="site-header__logo">Shivam<span class="site-header__logo-dot">.</span></div>
+    <div class="site-header__bar">
+      <a class="site-header__logo" href="#home">Shivam<span class="site-header__logo-dot">.</span></a>
 
-    <nav class="site-header__nav" aria-label="Primary navigation">
-      <ul class="nav-list">
-        <li class="nav-list__item"><a class="nav-list__link" href="#home">Home</a></li>
-        <li class="nav-list__item"><a class="nav-list__link" href="#about">About</a></li>
-        <li class="nav-list__item"><a class="nav-list__link" href="#projects">Projects</a></li>
-        <li class="nav-list__item"><a class="nav-list__link" href="#contact">Contact</a></li>
+      <!-- Hamburger trigger: visible only on small screens (CSS controlled) -->
+      <button
+        class="nav-toggle"
+        type="button"
+        popovertarget="mobile-nav"
+        aria-label="Open navigation menu">
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+      </button>
+
+      <!-- Desktop nav: visible from tablet breakpoint up -->
+      <nav class="site-header__nav site-header__nav--desktop" aria-label="Primary navigation">
+        <ul class="nav-list">
+          <li class="nav-list__item"><a class="nav-list__link" href="#home">Home</a></li>
+          <li class="nav-list__item"><a class="nav-list__link" href="#about">About</a></li>
+          <li class="nav-list__item"><a class="nav-list__link" href="#services">Services</a></li>
+          <li class="nav-list__item"><a class="nav-list__link" href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Mobile nav: native Popover API, no JS required -->
+    <nav id="mobile-nav" popover class="mobile-nav" aria-label="Mobile navigation">
+      <ul class="mobile-nav__list">
+        <li><a class="mobile-nav__link" href="#home">Home</a></li>
+        <li><a class="mobile-nav__link" href="#about">About</a></li>
+        <li><a class="mobile-nav__link" href="#services">Services</a></li>
+        <li><a class="mobile-nav__link" href="#contact">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -30,17 +55,18 @@
     <!-- ===================== HERO SECTION ===================== -->
     <section class="hero" id="home">
       <div class="hero__content">
-        <h1 class="hero__title">Hi, I'm Shivam — Frontend Developer</h1>
+        <h1 class="hero__title">Building Fluid, Responsive Web Layouts</h1>
         <p class="hero__subtitle">
-          I build clean, accessible, and semantically structured web pages.
-          Currently sharpening my skills through the DecodeLabs Frontend
-          Development Internship.
+          I'm Shivam, a Frontend Developer at DecodeLabs. This page adapts
+          smoothly from a small phone screen to a large desktop monitor
+          using mobile-first CSS, media queries, and fluid units — no fixed
+          dimensions.
         </p>
-        <a href="#projects" class="btn btn--primary">View My Work</a>
+        <a href="#services" class="btn btn--primary">See the Breakpoints</a>
       </div>
       <div class="hero__image">
         <img
-          src="https://placehold.co/480x360/6b8f71/ffffff?text=Shivam"
+          src="https://placehold.co/480x360/2b5f7a/ffffff?text=Shivam"
           alt="Portrait placeholder for Shivam, Frontend Developer"
           width="480"
           height="360"
@@ -50,65 +76,79 @@
 
     <!-- ===================== ABOUT SECTION ===================== -->
     <section class="about" id="about">
-      <h2 class="section-title">About Me</h2>
+      <h2 class="section-title">About This Project</h2>
       <p class="about__text">
-        I'm an aspiring frontend developer focused on writing semantic HTML
-        and maintainable CSS. This page itself — Project 1 of the DecodeLabs
-        Industrial Training Kit — is my proof of mastering structure before
-        style: proper document outline, a defined sitemap, and a
-        separation-of-concerns approach where all styling lives in an
-        external stylesheet.
+        Project 2 of the DecodeLabs Industrial Training Kit is my adaptability
+        phase. Instead of designing for one fixed screen, I designed for
+        content: the layout below reflows using CSS Grid for macro structure
+        and Flexbox for component alignment, with breakpoints placed exactly
+        where the design starts to break, not at arbitrary device widths.
       </p>
     </section>
 
-    <!-- ===================== CONTENT GRID / PROJECTS SECTION ===================== -->
-    <section class="content-grid" id="projects">
-      <h2 class="section-title">What I'm Working On</h2>
+    <!-- ===================== RESPONSIVE GRID / SERVICES SECTION ===================== -->
+    <section class="content-grid" id="services">
+      <h2 class="section-title">Core Responsive Techniques</h2>
 
       <div class="content-grid__grid">
 
         <article class="card">
           <img
             class="card__image"
-            src="https://placehold.co/400x260/8fb996/ffffff?text=Semantic+HTML"
-            alt="Illustration representing semantic HTML structure"
+            src="https://placehold.co/400x260/3d7d9a/ffffff?text=Media+Queries"
+            alt="Illustration representing CSS media query breakpoints"
             width="400"
             height="260"
             loading="lazy">
-          <h3 class="card__title">Semantic HTML</h3>
+          <h3 class="card__title">Media Queries</h3>
           <p class="card__text">
-            Structuring pages with header, nav, main, section, article, and
-            footer so content is meaningful to browsers and screen readers.
+            Breakpoints at 480px, 768px, and 1024px reshape the layout as
+            the viewport grows, built mobile-first with min-width queries.
           </p>
         </article>
 
         <article class="card">
           <img
             class="card__image"
-            src="https://placehold.co/400x260/6b8f71/ffffff?text=CSS+Layout"
-            alt="Illustration representing CSS Grid and Flexbox layout"
+            src="https://placehold.co/400x260/2b5f7a/ffffff?text=Fluid+Typography"
+            alt="Illustration representing fluid typography scaling with clamp"
             width="400"
             height="260"
             loading="lazy">
-          <h3 class="card__title">CSS Grid & Flexbox</h3>
+          <h3 class="card__title">Fluid Typography</h3>
           <p class="card__text">
-            Using Grid for macro page structure and Flexbox for aligning
-            components like the navbar and cards.
+            Headings use clamp() so font size scales smoothly with the
+            viewport instead of jumping between fixed steps.
           </p>
         </article>
 
         <article class="card">
           <img
             class="card__image"
-            src="https://placehold.co/400x260/507a56/ffffff?text=Accessibility"
-            alt="Illustration representing web accessibility standards"
+            src="https://placehold.co/400x260/1f4a5f/ffffff?text=Responsive+Nav"
+            alt="Illustration representing a responsive hamburger navigation menu"
             width="400"
             height="260"
             loading="lazy">
-          <h3 class="card__title">Accessibility First</h3>
+          <h3 class="card__title">Responsive Navigation</h3>
           <p class="card__text">
-            Alt text on every image, labeled form fields, and color
-            contrast that meets 4.5:1 readability standards.
+            A hamburger menu (native Popover API, no JavaScript) appears on
+            small screens; a full inline nav appears on larger ones.
+          </p>
+        </article>
+
+        <article class="card">
+          <img
+            class="card__image"
+            src="https://placehold.co/400x260/3d7d9a/ffffff?text=Touch+Targets"
+            alt="Illustration representing accessible touch target sizing"
+            width="400"
+            height="260"
+            loading="lazy">
+          <h3 class="card__title">Accessible Touch Targets</h3>
+          <p class="card__text">
+            Every interactive element keeps a minimum 44x44px tap area,
+            and pinch-zoom is never disabled.
           </p>
         </article>
 
@@ -120,7 +160,7 @@
       <h2 class="section-title">Get In Touch</h2>
       <p class="contact__intro">Have a project in mind? Send me a message.</p>
 
-      <div class="contact__form">
+      <form class="contact__form">
         <div class="form-field">
           <label class="form-field__label" for="name">Full Name</label>
           <input class="form-field__input" type="text" id="name" name="name" placeholder="Your name" required>
@@ -136,8 +176,8 @@
           <textarea class="form-field__input form-field__input--textarea" id="message" name="message" rows="4" placeholder="Tell me about your project"></textarea>
         </div>
 
-        <button type="button" class="btn btn--primary">Send Message</button>
-      </div>
+        <button type="submit" class="btn btn--primary">Send Message</button>
+      </form>
     </section>
 
   </main>
@@ -150,7 +190,7 @@
       <p>&#127760; www.decodelabs.tech</p>
       <p>&#128205; Greater Lucknow, India</p>
     </div>
-    <p class="site-footer__copy">&copy; 2026 Shivam. Built for DecodeLabs — Project 1: Static Webpage Design.</p>
+    <p class="site-footer__copy">&copy; 2026 Shivam. Built for DecodeLabs — Project 2: Responsive Web Layout.</p>
   </footer>
 
 </body>
